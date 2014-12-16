@@ -136,7 +136,7 @@
         </item>
         <item type="TankIconMaker.Effects.SizePosEffect">
           <Name null="1" />
-          <Visible>False</Visible>
+          <Visible>True</Visible>
           <SavedByVersion>3</SavedByVersion>
           <VisibleFor>
             <By>Single</By>
@@ -173,88 +173,20 @@
             <Tier9>Yes</Tier9>
             <Tier10>Yes</Tier10>
           </VisibleFor>
-          <Percentage>20</Percentage>
+          <Percentage>95</Percentage>
           <Width>30</Width>
           <Height>18</Height>
           <PixelAlphaThreshold>120</PixelAlphaThreshold>
           <PositionByPixels>True</PositionByPixels>
           <Anchor>MidCenter</Anchor>
-          <X>22</X>
-          <Y>11</Y>
+          <X>15</X>
+          <Y>7</Y>
           <SizeByPixels>True</SizeByPixels>
           <SizeMode2>ByPercentage</SizeMode2>
           <GrowShrinkMode>ShrinkOnly</GrowShrinkMode>
           <ShowLayerBorders>False</ShowLayerBorders>
           <ShowPixelBorders>False</ShowPixelBorders>
           <ShowAnchor>False</ShowAnchor>
-        </item>
-        <item type="TankIconMaker.Effects.ColorizeEffect">
-          <Name null="1" />
-          <Visible>False</Visible>
-          <SavedByVersion>1</SavedByVersion>
-          <VisibleFor>
-            <By>Single</By>
-            <By2>Single</By2>
-            <By3>Single</By3>
-            <By4>Single</By4>
-            <ClassLight>Yes</ClassLight>
-            <ClassMedium>Yes</ClassMedium>
-            <ClassHeavy>Yes</ClassHeavy>
-            <ClassDestroyer>Yes</ClassDestroyer>
-            <ClassArtillery>Yes</ClassArtillery>
-            <ClassNone>Yes</ClassNone>
-            <CountryUSSR>Yes</CountryUSSR>
-            <CountryGermany>Yes</CountryGermany>
-            <CountryUSA>Yes</CountryUSA>
-            <CountryFrance>Yes</CountryFrance>
-            <CountryChina>Yes</CountryChina>
-            <CountryUK>Yes</CountryUK>
-            <CountryJapan>Yes</CountryJapan>
-            <CountryNone>Yes</CountryNone>
-            <CategNormal>Yes</CategNormal>
-            <CategPremium>Yes</CategPremium>
-            <CategSpecial>Yes</CategSpecial>
-            <Single>Yes</Single>
-            <TierNone>Yes</TierNone>
-            <Tier1>Yes</Tier1>
-            <Tier2>Yes</Tier2>
-            <Tier3>Yes</Tier3>
-            <Tier4>Yes</Tier4>
-            <Tier5>Yes</Tier5>
-            <Tier6>Yes</Tier6>
-            <Tier7>Yes</Tier7>
-            <Tier8>Yes</Tier8>
-            <Tier9>Yes</Tier9>
-            <Tier10>Yes</Tier10>
-          </VisibleFor>
-          <Color>
-            <By>Class</By>
-            <By2>Single</By2>
-            <By3>Single</By3>
-            <By4>Single</By4>
-            <ClassLight>#00FFFFFF</ClassLight>
-            <ClassMedium>#00FFFFFF</ClassMedium>
-            <ClassHeavy>#00FFFFFF</ClassHeavy>
-            <ClassDestroyer>#42172D6B</ClassDestroyer>
-            <ClassArtillery>#42912325</ClassArtillery>
-            <ClassNone>#FFFFFF</ClassNone>
-            <CountryUSSR>#FFFFFF</CountryUSSR>
-            <CountryGermany>#FFFFFF</CountryGermany>
-            <CountryUSA>#FFFFFF</CountryUSA>
-            <CountryFrance>#FFFFFF</CountryFrance>
-            <CountryChina>#FFFFFF</CountryChina>
-            <CountryUK>#FFFFFF</CountryUK>
-            <CountryJapan>#FFFFFF</CountryJapan>
-            <CountryNone>#FFFFFF</CountryNone>
-            <CategNormal>#FFFFFF</CategNormal>
-            <CategPremium>#FFFFFF</CategPremium>
-            <CategSpecial>#FFFFFF</CategSpecial>
-            <Single>#FFFFFF</Single>
-            <TierNone>#FFFFFF</TierNone>
-            <Tier1>#FFFFFF</Tier1>
-            <Tier5>#FFFFFF</Tier5>
-            <Tier10>#FFFFFF</Tier10>
-          </Color>
         </item>
         <item type="TankIconMaker.Effects.ClipEffect">
           <Name null="1" />
@@ -302,6 +234,74 @@
           <ClipBottom>2</ClipBottom>
           <Mode>ByIconBounds</Mode>
         </item>
+        <item type="TankIconMaker.Effects.ColorizeEffect">
+          <Name></Name>
+          <Visible>True</Visible>
+          <SavedByVersion>1</SavedByVersion>
+          <VisibleFor>
+            <By>Single</By>
+            <By2>Single</By2>
+            <By3>Single</By3>
+            <By4>Single</By4>
+            <ClassLight>Yes</ClassLight>
+            <ClassMedium>Yes</ClassMedium>
+            <ClassHeavy>Yes</ClassHeavy>
+            <ClassDestroyer>Yes</ClassDestroyer>
+            <ClassArtillery>Yes</ClassArtillery>
+            <ClassNone>Yes</ClassNone>
+            <CountryUSSR>Yes</CountryUSSR>
+            <CountryGermany>Yes</CountryGermany>
+            <CountryUSA>Yes</CountryUSA>
+            <CountryFrance>Yes</CountryFrance>
+            <CountryChina>Yes</CountryChina>
+            <CountryUK>Yes</CountryUK>
+            <CountryJapan>Yes</CountryJapan>
+            <CountryNone>Yes</CountryNone>
+            <CategNormal>Yes</CategNormal>
+            <CategPremium>Yes</CategPremium>
+            <CategSpecial>Yes</CategSpecial>
+            <Single>Yes</Single>
+            <TierNone>Yes</TierNone>
+            <Tier1>Yes</Tier1>
+            <Tier2>Yes</Tier2>
+            <Tier3>Yes</Tier3>
+            <Tier4>Yes</Tier4>
+            <Tier5>Yes</Tier5>
+            <Tier6>Yes</Tier6>
+            <Tier7>Yes</Tier7>
+            <Tier8>Yes</Tier8>
+            <Tier9>Yes</Tier9>
+            <Tier10>Yes</Tier10>
+          </VisibleFor>
+          <Color>
+            <By>Category</By>
+            <By2>Single</By2>
+            <By3>Single</By3>
+            <By4>Single</By4>
+            <ClassLight>#FFFFFF</ClassLight>
+            <ClassMedium>#FFFFFF</ClassMedium>
+            <ClassHeavy>#FFFFFF</ClassHeavy>
+            <ClassDestroyer>#FFFFFF</ClassDestroyer>
+            <ClassArtillery>#FFFFFF</ClassArtillery>
+            <ClassNone>#FFFFFF</ClassNone>
+            <CountryUSSR>#FFFFFF</CountryUSSR>
+            <CountryGermany>#FFFFFF</CountryGermany>
+            <CountryUSA>#FFFFFF</CountryUSA>
+            <CountryFrance>#FFFFFF</CountryFrance>
+            <CountryChina>#FFFFFF</CountryChina>
+            <CountryUK>#FFFFFF</CountryUK>
+            <CountryJapan>#FFFFFF</CountryJapan>
+            <CountryNone>#FFFFFF</CountryNone>
+            <CategNormal>#00FFFFFF</CategNormal>
+            <CategPremium>#81FFD700</CategPremium>
+            <CategSpecial>#80FF8C00</CategSpecial>
+            <Single>#FFFFFF</Single>
+            <TierNone>#FFFFFF</TierNone>
+            <Tier1>#FFFFFF</Tier1>
+            <Tier5>#FFFFFF</Tier5>
+            <Tier10>#FFFFFF</Tier10>
+          </Color>
+        </item>
       </Effects>
       <VisibleFor>
         <By>Single</By>
@@ -338,7 +338,7 @@
         <Tier9>Yes</Tier9>
         <Tier10>Yes</Tier10>
       </VisibleFor>
-      <Style>Contour</Style>
+      <Style>Class</Style>
     </item>
     <item type="TankIconMaker.Layers.PropertyTextLayer">
       <Name>Tier</Name>
@@ -780,7 +780,7 @@
         <CountryNone>#FFFFFF</CountryNone>
         <CategNormal>#D2D2D2</CategNormal>
         <CategPremium>#FFFF00</CategPremium>
-        <CategSpecial>#FFFF00</CategSpecial>
+        <CategSpecial>#FFA500</CategSpecial>
         <Single>#FFFFFF</Single>
         <TierNone>#FFFFFF</TierNone>
         <Tier1>#FFFFFF</Tier1>
