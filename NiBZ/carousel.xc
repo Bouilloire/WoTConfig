@@ -12,7 +12,7 @@
     "zoom": 1.2,
     // Number of rows at carousel.
     // Количество рядов карусели.
-    "rows": 1,
+    "rows": 3,
     // Spacing between carousel cells.
     // Отступ между ячейками карусели.
     "padding": {
@@ -21,13 +21,13 @@
     },
     // true - show filters even if all tanks fit on the screen.
     // true - показывать фильтры даже если все танки помещаются на экране.
-    "alwaysShowFilters": false,
+    "alwaysShowFilters": true,
     // true - hide cell "Buy tank".
     // true - скрыть ячейку "Купить танк".
     "hideBuyTank": false,
     // true - hide cell "Buy slot".
     // true - скрыть ячейку "Купить слот".
-    "hideBuySlot": true,
+    "hideBuySlot": false,
     // Visibility filters.
     // Видимость фильтров.
     "filters": {
@@ -67,15 +67,15 @@
     // Extra cell fields (see playersPanel.xc).
     // Дополнительные поля ячеек (см. playersPanel.xc).
     "extraFields": [
-      { "x": 25, "y": 0, "format": "<font color='{{v.premium?#FFCC66|#FFFFFF}}' face='$FieldFont' size='14' >{{v.rlevel}} -> {{v.battletiermin}}-{{v.battletiermax}}</font>", "shadow": {"strength": 3} },
+      { "x": 25, "y": 0, "format": "<font color='{{v.premium?#FFCC66|#FFFFFF}}' face='$FieldFont' size='18' >{{v.rlevel}} -> {{v.battletiermin}}-{{v.battletiermax}}</font>", "shadow": {"strength": 3} },
       // Sign of mastery.
       // Знак мастерства.
-      { "x": -1, "y": 14, "format": "<img src='img://gui/maps/icons/library/proficiency/class_icons_{{v.mastery}}.png' width='25' height='25'>" },
+      { "x": -1, "y": 14, "format": "<img src='img://gui/maps/icons/library/proficiency/class_icons_{{v.mastery}}.png' width='30' height='30'>" },
       // Winrate.
-      { "x": 25, "y": 18, "format": "<font face='$FieldFont' size='14' color='{{v.c_winrate}}'>{{v.winrate%d~%| }}</font>", "shadow": {"strength": 3} },
+      { "x": 25, "y": 22, "format": "<font face='$FieldFont' size='14' color='{{v.c_winrate}}'>{{v.winrate%d~%| }}</font>", "shadow": {"strength": 3} },
       // Number of games.
-      { "x": 2, "y": 37, "format": "<font face='XVMSymbol' size='14' color='#FFFFFF'> R</font>", "shadow": {"strength": 3} },
-      { "x": 25, "y": 37, "format": "<font size='14' color='{{v.c_battles}}'>{{v.battles}}</font>", "shadow": {"strength": 3} }
+      { "x": 2, "y": 41, "format": "<font face='XVMSymbol' size='14' color='#FFFFFF'> R</font>", "shadow": {"strength": 3} },
+      { "x": 25, "y": 41, "format": "<font size='14' color='{{v.c_battles}}'>{{v.battles}}</font>", "shadow": {"strength": 3} }
     ]
   }
 }

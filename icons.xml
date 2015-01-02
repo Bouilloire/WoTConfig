@@ -2,6 +2,7 @@
 <item>
   <Name>Rylanor</Name>
   <Author>Rylanor</Author>
+  <PathTemplate></PathTemplate>
   <IconWidth>80</IconWidth>
   <IconHeight>24</IconHeight>
   <Centerable>True</Centerable>
@@ -339,6 +340,103 @@
         <Tier10>Yes</Tier10>
       </VisibleFor>
       <Style>Class</Style>
+    </item>
+    <item type="TankIconMaker.Layers.TankImageLayer">
+      <Name></Name>
+      <Visible>True</Visible>
+      <SavedByVersion>1</SavedByVersion>
+      <Effects>
+        <item type="TankIconMaker.Effects.SizePosEffect">
+          <Name></Name>
+          <Visible>True</Visible>
+          <SavedByVersion>3</SavedByVersion>
+          <VisibleFor>
+            <By>Single</By>
+            <By2>Single</By2>
+            <By3>Single</By3>
+            <By4>Single</By4>
+            <ClassLight>Yes</ClassLight>
+            <ClassMedium>Yes</ClassMedium>
+            <ClassHeavy>Yes</ClassHeavy>
+            <ClassDestroyer>Yes</ClassDestroyer>
+            <ClassArtillery>Yes</ClassArtillery>
+            <ClassNone>Yes</ClassNone>
+            <CountryUSSR>Yes</CountryUSSR>
+            <CountryGermany>Yes</CountryGermany>
+            <CountryUSA>Yes</CountryUSA>
+            <CountryFrance>Yes</CountryFrance>
+            <CountryChina>Yes</CountryChina>
+            <CountryUK>Yes</CountryUK>
+            <CountryJapan>Yes</CountryJapan>
+            <CountryNone>Yes</CountryNone>
+            <CategNormal>Yes</CategNormal>
+            <CategPremium>Yes</CategPremium>
+            <CategSpecial>Yes</CategSpecial>
+            <Single>Yes</Single>
+            <TierNone>Yes</TierNone>
+            <Tier1>Yes</Tier1>
+            <Tier2>Yes</Tier2>
+            <Tier3>Yes</Tier3>
+            <Tier4>Yes</Tier4>
+            <Tier5>Yes</Tier5>
+            <Tier6>Yes</Tier6>
+            <Tier7>Yes</Tier7>
+            <Tier8>Yes</Tier8>
+            <Tier9>Yes</Tier9>
+            <Tier10>Yes</Tier10>
+          </VisibleFor>
+          <Percentage>53</Percentage>
+          <Width>7</Width>
+          <Height>4</Height>
+          <PixelAlphaThreshold>120</PixelAlphaThreshold>
+          <PositionByPixels>True</PositionByPixels>
+          <Anchor>BottomRight</Anchor>
+          <X>79</X>
+          <Y>22</Y>
+          <SizeByPixels>True</SizeByPixels>
+          <SizeMode2>ByPercentage</SizeMode2>
+          <GrowShrinkMode>GrowAndShrink</GrowShrinkMode>
+          <ShowLayerBorders>False</ShowLayerBorders>
+          <ShowPixelBorders>False</ShowPixelBorders>
+          <ShowAnchor>False</ShowAnchor>
+        </item>
+      </Effects>
+      <VisibleFor>
+        <By>Single</By>
+        <By2>Single</By2>
+        <By3>Single</By3>
+        <By4>Single</By4>
+        <ClassLight>Yes</ClassLight>
+        <ClassMedium>Yes</ClassMedium>
+        <ClassHeavy>Yes</ClassHeavy>
+        <ClassDestroyer>Yes</ClassDestroyer>
+        <ClassArtillery>Yes</ClassArtillery>
+        <ClassNone>Yes</ClassNone>
+        <CountryUSSR>Yes</CountryUSSR>
+        <CountryGermany>Yes</CountryGermany>
+        <CountryUSA>Yes</CountryUSA>
+        <CountryFrance>Yes</CountryFrance>
+        <CountryChina>Yes</CountryChina>
+        <CountryUK>Yes</CountryUK>
+        <CountryJapan>Yes</CountryJapan>
+        <CountryNone>Yes</CountryNone>
+        <CategNormal>Yes</CategNormal>
+        <CategPremium>Yes</CategPremium>
+        <CategSpecial>Yes</CategSpecial>
+        <Single>Yes</Single>
+        <TierNone>Yes</TierNone>
+        <Tier1>Yes</Tier1>
+        <Tier2>Yes</Tier2>
+        <Tier3>Yes</Tier3>
+        <Tier4>Yes</Tier4>
+        <Tier5>Yes</Tier5>
+        <Tier6>Yes</Tier6>
+        <Tier7>Yes</Tier7>
+        <Tier8>Yes</Tier8>
+        <Tier9>Yes</Tier9>
+        <Tier10>Yes</Tier10>
+      </VisibleFor>
+      <Style>Country</Style>
     </item>
     <item type="TankIconMaker.Layers.PropertyTextLayer">
       <Name>Tier</Name>
