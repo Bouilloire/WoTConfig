@@ -12,7 +12,7 @@
     "zoom": 1.2,
     // Number of rows at carousel.
     // Количество рядов карусели.
-    "rows": 3,
+    "rows": 1,
     // Spacing between carousel cells.
     // Отступ между ячейками карусели.
     "padding": {
