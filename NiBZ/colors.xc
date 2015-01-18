@@ -184,11 +184,19 @@
     ],
     // Dynamic color by remaining health percent.
     // Динамический цвет по проценту оставшегося здоровья.
+    //"hp_ratio": [
+    //  { "value": 10,  "color": ${"def.colorHP.very_low"     } },       // Цвет для значений менее 10 проц
+    //  { "value": 25,  "color": ${"def.colorHP.low"          } },       // Цвет для значений менее 25 проц
+    //  { "value": 50,  "color": ${"def.colorHP.average"      } },       // Цвет для значений менее 50 проц
+    //  { "value": 101, "color": ${"def.colorHP.above_average"} }        // Цвет для остальных значений
+    //],
     "hp_ratio": [
-      { "value": 10,  "color": ${"def.colorHP.very_low"     } },       // Цвет для значений менее 10 проц
-      { "value": 25,  "color": ${"def.colorHP.low"          } },       // Цвет для значений менее 25 проц
-      { "value": 50,  "color": ${"def.colorHP.average"      } },       // Цвет для значений менее 50 проц
-      { "value": 101, "color": ${"def.colorHP.above_average"} }        // Цвет для остальных значений
+      { "value": 10,  "color": "0xFF0000" },
+      { "value": 25,  "color": "0xE86900" },
+      { "value": 50,  "color": "0xE8B600" },
+      { "value": 75,  "color": "0xAAC900" },
+      { "value": 95,  "color": "0x33C900" },
+      { "value": 101, "color": "0x4CFF00" }
     ],
     // Dynamic color for XVM Scale
     // Динамический цвет по шкале XVM

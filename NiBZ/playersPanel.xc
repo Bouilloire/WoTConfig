@@ -3,6 +3,55 @@
  * Параметры панелей игроков ("ушей").
  */
 {
+"def": {
+    // Text fields shadow definition.
+    // Шаблон тени текстовых полей.
+	"textFieldShadow": { "color": "0x000000", "alpha": 100, "angle": 0, "blur": 2, "strength": 100, "distance": 0 }
+  },
+    // Enemy spotted status marker format for substitutions in extra fields.
+    // Подстановка для дополнительного поля с маркером статуса засвета
+  "enemySpottedMarker": {
+    // Opacity percentage of spotted markers in the panels. 0 - transparent (disabled) ... 100 - opaque.
+    // Прозрачность в процентах маркеров засвета в ушах. 0 - полностью прозрачные (отключены), 100 - не прозрачные.
+    "alpha": 100,
+    // x position.
+    // положение по горизонтали.
+    "x": 0,
+    // y position.
+    // положение по вертикали.
+    "y": 0,
+    // true - x position is binded to vehicle icon, false - binded to edge of the screen.
+    // true - положение по горизонтали отсчитывается от иконки танка, false - от края экрана.
+    "bindToIcon": true,
+    // enemy spotted status marker format.
+    // формат маркера статуса засвета.
+    "format": "{{spotted}}",
+    // shadow (see below).
+    // настройки тени (см. ниже).
+    "shadow": ${ "def.textFieldShadow"}
+  },
+    // Enemy spotted status marker format for substitutions in extra fields.
+    // Подстановка для дополнительного поля с маркером статуса засвета
+  "platoonMarker": {
+    // Opacity percentage of spotted markers in the panels. 0 - transparent (disabled) ... 100 - opaque.
+    // Прозрачность в процентах маркеров засвета в ушах. 0 - полностью прозрачные (отключены), 100 - не прозрачные.
+    "alpha": "{{squad?100|00}}",
+    // x position.
+    // положение по горизонтали.
+    "x": 0,
+    // y position.
+    // положение по вертикали.
+    "y": 0,
+    // true - x position is binded to vehicle icon, false - binded to edge of the screen.
+    // true - положение по горизонтали отсчитывается от иконки танка, false - от края экрана.
+    "bindToIcon": true,
+    // enemy spotted status marker format.
+    // формат маркера статуса засвета.
+    "format": "<font face='$FieldFont' size='24' color='#FFB964'>*</font>",
+    // shadow (see below).
+    // настройки тени (см. ниже).
+    "shadow": ${ "def.textFieldShadow"}
+  },
   "playersPanel": {
     // Opacity percentage of the panels. 0 - transparent, 100 - opaque.
     // Прозрачность в процентах ушей. 0 - прозрачные, 100 - не прозрачные.
@@ -34,47 +83,11 @@
       "h": 16,
       "alpha": 90
     },
-    // Enemy spotted status marker at right side panel.
-    // This feature depends on enabled XVM minimap mod
-    // Маркер статуса засвета в правой боковой панели списка игроков.
-    // Фича зависит от включенного XVM мода миникарты
-    "enemySpottedMarker": {
-      // false - Disable.
-      // false - отключить.
-      "enabled": true,
-      // Offset relative to level icon (by X, Y).
-      // Смещение относительно иконки уровня танка (по X, Y).
-      "Xoffset": 15,
-      "Yoffset": 0,
-      // Формат.
-      "format": {
-        // Never seen this enemy.
-        // Этот враг никогда не светился.
-        "neverSeen": "",
-        // This enemy was seen at least once.
-        // Этот враг светился хотя бы один раз и отмечен на миникарте как потерянный.
-        "lost": "<font face='$FieldFont' size='24' color='#999999'>*</font>",
-        // Enemy currently revealed at minimap.
-        // Виден на миникарте прямо сейчас.
-        "revealed": "<font face='$FieldFont' size='24' color='#FFFFFF'>*</font>",
-        // Dead enemy.
-        // Уничтоженный враг.
-        "dead": "",
-        // Artillery specific values.
-        // Специфичные значения для артиллерии.
-        "artillery": {
-          "neverSeen": "",
-          "lost": "<font face='$FieldFont' size='24' color='#999999'>*</font>",
-          "revealed": "<font face='$FieldFont' size='24' color='#FFFFFF'>*</font>",
-          "dead": ""
-        }
-      }
-    },
     // Options for the "none" panels - empty panels.
     // Режим ушей "none" - пустые уши.
     "none": {
       // false - disable (отключить)
-      "enabled": true,
+      "enabled": false,
       // Layout ("vertical" or "horizontal")
       // Размещение ("vertical" - вертикально, или "horizontal" - горизонтально)
       "layout": "vertical",
@@ -233,32 +246,43 @@
       "enabled": true,
       // Minimum width of the player's name column, 0-250. Default is 170.
       // Минимальная ширина имени игрока, 0-250. По умолчанию: 170.
-      "width": 300,
+      "width": 200,
       // Display format for player nickname (macros allowed, see readme-en.txt).
       // Формат отображения имени игрока (допускаются макроподстановки, см. readme-ru.txt).
-      "nickFormatLeft": "| <font face='Lucida Console' size='12' color='{{c:t-rating}}' alpha='{{alive?#FF|#80}}'>{{t-rating%2d~%|   }}</font> {{nick}}",
-      "nickFormatRight": "{{nick}} <font face='Lucida Console' size='12' color='{{c:t-rating}}' alpha='{{alive?#FF|#80}}'>{{t-rating%2d~%|   }}</font> |",
+      "nickFormatLeft": "",
+      "nickFormatRight": "",
       // Display format for vehicle name (macros allowed, see readme-en.txt).
       // Формат отображения названия танка (допускаются макроподстановки, см. readme-ru.txt).
       "vehicleFormatLeft": "",
       "vehicleFormatRight": "",
       // Display format for frags (macros allowed, see readme-en.txt).
       // Формат отображения фрагов (допускаются макроподстановки, см. readme-ru.txt).
-      "fragsFormatLeft": "{{frags}}",
-      "fragsFormatRight": "{{frags}}",
+      "fragsFormatLeft": "",
+      "fragsFormatRight": "",
       // Extra fields. Each field have size 350x25. Fields are placed one above the other.
       // Дополнительные поля. Каждое поле имеет размер 350x25. Поля располагаются друг над другом.
       "extraFieldsLeft": [
-      { "x": 60, "y": 0, "valign": "center", "h": 24, "w": "{{hp-max:300}}", "bgColor": "0xCC0000", "alpha":"{{alive?20|0}}" },
-      { "x": 60, "y": 0, "valign": "center", "h": 24, "w": "{{hp:300}}", "bgColor": "{{c:hp-ratio}}", "alpha":"{{alive?45|0}}" },
-      { "x": 250, "y": 3, "format": "<font size='12' color='{{c:hp-ratio}}'>{{hp}} - {{hp-ratio%2d~%}}</font>", "alpha": "{{alive?100|0}}" },
-      {}
+        ${"platoonMarker"},
+        { "x": 30, "y": 21, "h": 1, "valign": "center", "w": "{{hp-ratio:220}}", "bgColor": "{{c:hp-ratio}}", "alpha": "{{alive?90|0}}", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 30, "y": -2, "valign": "center", "format": "<b><font face='$FieldFont' size='13' color='{{c:t-rating}}' alpha='{{alive?#FF|#90}}'>{{t-rating%2d|--}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 50, "y": -3, "valign": "center", "format": "<b><font face='$FieldFont' size='13' alpha='{{alive?#FF|#90}}' color='{{c:xwn8|#666666}}'>{{name%.10s~..}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 120, "y": -18, "valign": "center", "alpha": "{{alive?90|0}}", "format": "<font face='XVMSymbol' size='24' color='{{c:hp-ratio|#666666}}'>&#x27;</font>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 120, "y": -18, "valign": "center", "alpha": "{{alive?0|90}}", "format": "<font face='XVMSymbol' size='24' color='{{c:hp-ratio|#666666}}'>&#x26;</font>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 135, "y": -1, "valign": "center", "alpha": "{{alive?90|0}}", "format": "<b><font face='$FieldFont' size='12' color='#FFFFFF'>{{hp-ratio%2d|--}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 185, "y": -3, "align": "center","valign": "center", "format": "<font face='$FieldFont' size='13' alpha='{{alive?#FF|#90}}'>{{frags}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 300, "y": 1, "align": "center", "format": "<font face='XVMSymbol' size='{{alive?0|20}}' color='#96F						 F00' alpha='{{alive?#FF|90}}'>&#x2B;</font>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 315, "y": 0, "align": "center", "alpha": "{{alive?90|0}}", "format": "<b><font face='$FieldFont' size='{{ready?0|16}}'>{{l10n:Not ready}}</font></b>", "shadow": ${ "def.textFieldShadow"} }      
       ],
       "extraFieldsRight": [
-      { "x": 60, "y": 0, "valign": "center", "h": 24, "w": "{{hp-max:300}}", "bgColor": "0xCC0000", "alpha": "{{alive?20|0}}" },
-      { "x": 60, "y": 0, "valign": "center", "h": 24, "w": "{{hp:300}}", "bgColor": "{{c:hp-ratio}}", "alpha": "{{alive?45|0}}" },
-      { "x": 250, "y": 3, "format": "<font size='12' color='{{c:hp-ratio}}'>{{hp}} - {{hp-ratio%2d~%}}</font>", "alpha": "{{alive?100|0}}" },
-      {}
+        ${"enemySpottedMarker"},
+        { "x": 30, "y": 21, "h": 1, "valign": "center", "w": "{{hp-ratio:220}}", "bgColor": "{{c:hp-ratio}}", "alpha": "{{alive?spotted?90|50|0}}", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 30, "y": -2, "valign": "center", "format": "<b><font face='$FieldFont' size='13' color='{{c:t-rating}}' alpha='{{alive?#FF|#90}}'>{{t-rating%2d|--}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 50, "y": -3, "valign": "center", "format": "<b><font face='$FieldFont' size='13' alpha='{{alive?#FF|#90}}' color='{{c:xwn8|#666666}}'>{{name%.10s~..}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 120, "y": -18, "valign": "center", "alpha": "{{alive?90|0}}", "format": "<font face='XVMSymbol' size='24' color='{{c:hp-ratio|#666666}}'>&#x2A;</font>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 120, "y": -18, "valign": "center", "alpha": "{{alive?0|90}}", "format": "<font face='XVMSymbol' size='24' color='{{c:hp-ratio|#666666}}'>&#x29;</font>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 136, "y": -1, "valign": "center", "alpha": "{{alive?90|0}}", "format": "<b><font face='$FieldFont' size='12' color='#FFFFFF'>{{hp-ratio%2d|--}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 185, "y": -3, "align": "center","valign": "center", "format": "<b><font face='$FieldFont' size='13' alpha='{{alive?#FF|#90}}'>{{frags}}</font></b>", "shadow": ${ "def.textFieldShadow"} },
+        { "x": 315, "y": 0, "align": "center", "alpha": "{{alive?90|0}}", "format": "<b><font face='$FieldFont' size='{{ready?0|16}}'>{{l10n:Not ready}}</font></b>", "shadow": ${ "def.textFieldShadow"} }
       ]
     }
   }
