@@ -31,8 +31,8 @@ Note: The same process, except for registration, apply for each xvm update.
 4. All done!
 
 ### XVM
-1. Copy the `NiBZ` folder in the `<WoT>\res_mods\xvm\config\` folder (keep it in a directory)
-2. Copy the `xvm.xc` file in the `<WoT>\res_mods\xvm\config\` folder
+1. Copy the `NiBZ` folder in the `<WoT>\res_mods\config\xvm\` folder (keep it in a directory)
+2. Copy the `xvm.xc` file in the `<WoT>\res_mods\config\xvm\` folder
 3. All done!
 
 ## After this...
