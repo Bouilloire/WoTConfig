@@ -9,7 +9,7 @@
     "skipIntro": true,
     // Save last server
     // Сохранять последний сервер
-    "saveLastServer": false,
+    "saveLastServer": true,
     // Auto enter to the game
     // Автоматический вход в игру
     "autologin": true,

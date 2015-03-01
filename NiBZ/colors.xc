@@ -370,5 +370,5 @@
       { "value": 99.9,  "color": ${"def.colorRating.very_good"} },
       { "value": 101,   "color": ${"def.colorRating.unique"   } }
     ]
-  }
+ }
 }

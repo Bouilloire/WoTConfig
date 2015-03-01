@@ -12,7 +12,7 @@
     "zoom": 1.2,
     // Number of rows at carousel.
     // Количество рядов карусели.
-    "rows": 1,
+    "rows": 3,
     // Spacing between carousel cells.
     // Отступ между ячейками карусели.
     "padding": {
@@ -75,7 +75,10 @@
       { "x": 25, "y": 22, "format": "<font face='$FieldFont' size='14' color='{{v.c_winrate}}'>{{v.winrate%d~%| }}</font>", "shadow": {"strength": 3} },
       // Number of games.
       { "x": 2, "y": 41, "format": "<font face='XVMSymbol' size='14' color='#FFFFFF'> R</font>", "shadow": {"strength": 3} },
-      { "x": 25, "y": 41, "format": "<font size='14' color='{{v.c_battles}}'>{{v.battles}}</font>", "shadow": {"strength": 3} }
+      { "x": 25, "y": 41, "format": "<font size='14' color='{{v.c_battles}}'>{{v.battles}}</font>", "shadow": {"strength": 3} },
+      // Remaining XP to grind
+      { "x": 145, "y": 22, "format": "<font size='14' color='#C0C0C0'>To Elite:</font>", "shadow": {"strength": 3}, "alpha": "{{v.xpToEliteLeft?100|0}}" },
+      { "x": 150, "y": 41, "format": "<font size='14' color='{{v.xpToEliteLeft>50000?#FE0E00|{{v.xpToEliteLeft>30000?#FE7903|{{v.xpToEliteLeft>10000?#F8F400|{{v.xpToEliteLeft>5000?#60FF00|{{v.xpToEliteLeft>1000?#02C9B3|#D042F3}}}}}}}}}}'>{{v.xpToEliteLeft%6d}}</font>", "shadow": {"strength": 3}, "alpha": "{{v.xpToEliteLeft?100|0}}" }
     ]
   }
 }
