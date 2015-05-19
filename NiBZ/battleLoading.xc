@@ -47,10 +47,10 @@
     "darkenNotReadyIcon": true,
     // Display format for the left panel (macros allowed, see readme-en.txt).
     // Формат отображения для левой панели (допускаются макроподстановки, см. readme-ru.txt).
-    "formatLeftNick": "<img src='xvm://res/icons/lang/{{region|RU}}/{{language|empty}}.png' width='16' height='13'> <img src='xvm://res/icons/xvm/xvm-user-{{xvm-user|none}}.png'> <font face='$FieldFont' size='13' color='{{c:wn8}}'>{{name%.20s~..}}</font>  <font face='Consolas' size='10' color='#FFCC66'>{{clannb}}</font>",
+    "formatLeftNick": "<img src='xvm://res/icons/flags/{{flag|default}}.png' width='16' height='13'> <img src='xvm://res/icons/xvm/xvm-user-{{xvm-user|none}}.png'> <font face='$FieldFont' size='13' color='{{c:wn8}}'>{{name%.20s~..}}</font>  <font face='Consolas' size='10' color='#FFCC66'>{{clannb}}</font>",
     // Display format for the right panel (macros allowed, see readme-en.txt).
     // Формат отображения для правой панели (допускаются макроподстановки, см. readme-ru.txt).
-    "formatRightNick": "<font face='Consolas' size='10' color='#FFCC66'>{{clannb}}</font> <font face='$FieldFont' size='13' color='{{c:wn8}}'>{{name%.20s~..}}</font> <img src='xvm://res/icons/xvm/xvm-user-{{xvm-user|none}}.png'> <img src='xvm://res/icons/lang/{{region|RU}}/{{language|empty}}.png' width='16' height='13'>",
+    "formatRightNick": "<font face='Consolas' size='10' color='#FFCC66'>{{clannb}}</font> <font face='$FieldFont' size='13' color='{{c:wn8}}'>{{name%.20s~..}}</font> <img src='xvm://res/icons/xvm/xvm-user-{{xvm-user|none}}.png'> <img src='xvm://res/icons/flags/{{flag|default}}.png' width='16' height='13'>",
     // Display format for the left panel (macros allowed, see readme-en.txt).
     // Формат отображения для левой панели (допускаются макроподстановки, см. readme-ru.txt).
     "formatLeftVehicle": "<font face='$FieldFont' size='14'><font color='{{c:kb|#666666}}'>{{kb%2d~k|--k}}</font>   <font color='{{c:xwn8}}'>{{wn8%4d|----}}</font>  <font color='{{c:rating|#666666}}'>{{rating%2d~%|--%}}</font>",

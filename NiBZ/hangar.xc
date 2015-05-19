@@ -13,6 +13,15 @@
     // true - Hide price button in tech tree
     // true - Прятать кнопку с ценой в дереве исследований
     "hidePricesInTechTree": false,
+    // true - Allow to consider the exchange of experience with gold in tech tree
+    // true - Разрешить учитывать обмен опыта за голду в дереве исследований
+    "allowExchangeXPInTechTree": false,
+    // true - Automatically return previous crew upon vehicle change
+    // true - Автоматически возвращать предыдущий экипаж при смене танка
+    "autoPutPreviousCrewInTanks": false,
+    // true - Show shooting range of artillery and machine guns in carousel and techtree tooltips
+    // true - Показывать дальность стрельбы артиллерии и пулеметов в всплывающих подсказках карусели и дерева исследований
+    "showShootRangeTooltip": true,
     // true - Enable widgets
     // true - включить виджеты
     "widgetsEnabled": false,

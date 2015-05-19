@@ -78,7 +78,9 @@
       { "x": 25, "y": 41, "format": "<font size='14' color='{{v.c_battles}}'>{{v.battles}}</font>", "shadow": {"strength": 3} },
       // Remaining XP to grind
       { "x": 145, "y": 22, "format": "<font size='14' color='#C0C0C0'>To Elite:</font>", "shadow": {"strength": 3}, "alpha": "{{v.xpToEliteLeft?100|0}}" },
-      { "x": 150, "y": 41, "format": "<font size='14' color='{{v.xpToEliteLeft>50000?#FE0E00|{{v.xpToEliteLeft>30000?#FE7903|{{v.xpToEliteLeft>10000?#F8F400|{{v.xpToEliteLeft>5000?#60FF00|{{v.xpToEliteLeft>1000?#02C9B3|#D042F3}}}}}}}}}}'>{{v.xpToEliteLeft%6d}}</font>", "shadow": {"strength": 3}, "alpha": "{{v.xpToEliteLeft?100|0}}" }
+      { "x": 150, "y": 41, "format": "<font size='14' color='{{v.xpToEliteLeft>50000?#FE0E00|{{v.xpToEliteLeft>30000?#FE7903|{{v.xpToEliteLeft>10000?#F8F400|{{v.xpToEliteLeft>5000?#60FF00|{{v.xpToEliteLeft>1000?#02C9B3|#D042F3}}}}}}}}}}'>{{v.xpToEliteLeft%6d}}</font>", "shadow": {"strength": 3}, "alpha": "{{v.xpToEliteLeft?100|0}}" },
+      // Selected
+      { "x": 2, "y": 60, "format": "<font face='XVMSymbol' size='24' color='#60FF00'>&#x27;</font>", "alpha": "{{v.selected?100|0}}", "shadow": {"stength": 3} }
     ]
   }
 }
