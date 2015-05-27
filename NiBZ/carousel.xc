@@ -81,6 +81,22 @@
       { "x": 150, "y": 41, "format": "<font size='14' color='{{v.xpToEliteLeft>50000?#FE0E00|{{v.xpToEliteLeft>30000?#FE7903|{{v.xpToEliteLeft>10000?#F8F400|{{v.xpToEliteLeft>5000?#60FF00|{{v.xpToEliteLeft>1000?#02C9B3|#D042F3}}}}}}}}}}'>{{v.xpToEliteLeft%6d}}</font>", "shadow": {"strength": 3}, "alpha": "{{v.xpToEliteLeft?100|0}}" },
       // Selected
       { "x": 2, "y": 60, "format": "<font face='XVMSymbol' size='24' color='#60FF00'>&#x27;</font>", "alpha": "{{v.selected?100|0}}", "shadow": {"stength": 3} }
-    ]
+    ],
+    // Order of nations.
+    // Порядок наций.
+    //"nations_order": ["ussr", "germany", "usa", "france", "uk", "china", "japan"],
+    "nations_order": [],
+    // Order of types of vehicles.
+    // Порядок классов техники.
+    //"types_order":   ["lightTank", "mediumTank", "heavyTank", "AT-SPG", "SPG"],
+    "types_order":   ["heavyTank", "mediumTank", "lightTank", "AT-SPG", "SPG"],
+    // Tank sorting criteria, available options: (minus = reverse order)
+    // Критерии сортировки танков, доступные значения: (минус = в обратном порядке)
+    // "nation", "type", "level", "maxBattleTier", "premium", "-level", "-maxBattleTier", "-premium"
+    //"sorting_criteria": ["nation", "type", "level"],
+    "sorting_criteria": ["-maxBattleTier", "-level", "type", "nation"],
+    // Suppress the tooltips for tanks in carousel
+    // Убрать подсказки к танкам в карусели
+    "suppressCarouselTooltips": false
   }
 }
