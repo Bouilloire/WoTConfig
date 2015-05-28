@@ -1,0 +1,2 @@
+C_DRIVE='/cygdrive/c/'
+WOT_INSTALL_PATH=$C_DRIVE'Games/WoT/'

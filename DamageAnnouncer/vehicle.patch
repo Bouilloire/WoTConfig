@@ -1,0 +1,374 @@
+--- wg_vehicle.py	2015-05-29 00:38:44.550340600 +0200
++++ vehicle.py	2015-05-29 00:38:15.093655800 +0200
+@@ -1,4 +1,3 @@
+-#Embedded file name: scripts/client/Vehicle.py
+ import BigWorld, Math
+ import functools
+ import weakref, random
+@@ -24,6 +23,9 @@
+ import ArenaType
+ import BattleReplay
+ import TriggersManager
++import json
++import os
++from messenger import MessengerEntry
+ from TriggersManager import TRIGGER_TYPE
+ from ModelHitTester import segmentMayHitVehicle, SegmentCollisionResult
+ from gun_rotation_shared import decodeGunAngles
+@@ -37,6 +39,22 @@
+     isTurretMarkedForDetachment = property(lambda self: self.health == constants.SPECIAL_VEHICLE_HEALTH.TURRET_DETACHED)
+     isTurretDetachmentConfirmationNeeded = property(lambda self: not self.__turretDetachmentConfirmed)
+ 
++    __damageCfg = None
++    try:
++        from xml.dom import minidom
++        path_items = minidom.parse(os.path.join(os.getcwd(), 'paths.xml')).getElementsByTagName('Path')
++        for root in path_items:
++            path = os.path.join(os.getcwd(), root.childNodes[0].data)
++            if os.path.isdir(path):
++                conf_file = os.path.join(path, 'scripts', 'client', 'vehicle_damage.json')
++                if os.path.isfile(conf_file):
++                    with open(conf_file) as data_file:
++                        __damageCfg = json.load(data_file)
++    except Exception, err:
++        LOG_NOTE("Error: ", err)
++
++    __tankHealth = {}
++
+     def __init__(self):
+         self.proxy = weakref.proxy(self)
+         self.extras = {}
+@@ -50,6 +68,9 @@
+         self.__stopHornSoundCallback = None
+         self.__isEnteringWorld = False
+         self.__turretDetachmentConfirmed = False
++        self.__battleID = 0
++        self.__hitType = 0
++        self.__hasWarned = False
+ 
+     def reload(self):
+         wasStarted = self.isStarted
+@@ -65,6 +86,7 @@
+     def prerequisites(self):
+         if self.typeDescriptor is not None:
+             return ()
++
+         prereqs = []
+         descr = vehicles.VehicleDescr(compactDescr=_stripVehCompDescrIfRoaming(self.publicInfo.compDescr))
+         self.typeDescriptor = descr
+@@ -92,6 +114,15 @@
+ 
+         player.initSpace()
+         player.vehicle_onEnterWorld(self)
++
++        # Setup Tank Parameters
++        for key, vehicle in player.arena.vehicles.iteritems():
++            if vehicle["name"] == self.publicInfo.name:
++                self.__battleID = key
++                break
++        if self.__battleID not in self.__tankHealth:
++            self.__tankHealth[self.__battleID] = self.typeDescriptor.maxHealth
++
+         self.__isEnteringWorld = False
+ 
+     def onLeaveWorld(self):
+@@ -116,6 +147,7 @@
+     def showDamageFromShot(self, attackerID, points, effectsIndex):
+         if not self.isStarted:
+             return
++
+         effectsDescr = vehicles.g_cache.shotEffects[effectsIndex]
+         maxHitEffectCode, decodedPoints = DamageFromShotDecoder.decodeHitPoints(points, self.typeDescriptor)
+         hasPiercedHit = DamageFromShotDecoder.hasDamaged(maxHitEffectCode)
+@@ -133,8 +165,14 @@
+             self.appearance.executeHitVibrations(maxHitEffectCode)
+             player = BigWorld.player()
+             player.inputHandler.onVehicleShaken(self, compMatrix.translation, firstHitDir, effectsDescr['caliber'], ShakeReason.HIT if hasPiercedHit else ShakeReason.HIT_NO_DAMAGE)
++
++        self.__hitType = effectsIndex
++        if not hasPiercedHit:
++            self.damage_announce(attackerID, 0)
++
+         if not self.isAlive():
+             return
++
+         if attackerID == BigWorld.player().playerVehicleID and maxHitEffectCode is not None and not self.isPlayer:
+             marker = getattr(self, 'marker', None)
+             if marker is not None:
+@@ -144,6 +182,8 @@
+     def showDamageFromExplosion(self, attackerID, center, effectsIndex):
+         if not self.isStarted:
+             return
++
++        self.__hitType = effectsIndex
+         impulse = vehicles.g_cache.shotEffects[effectsIndex]['targetImpulse']
+         dir = self.position - center
+         dir.normalise()
+@@ -246,6 +286,14 @@
+             return
+         if not self.isStarted:
+             return
++
++        # Update Tank Health
++        damage = self.__tankHealth[self.__battleID] - newHealth
++        self.__tankHealth[self.__battleID] = newHealth
++
++        if attackReasonID == 0:
++            self.damage_announce(attackerID, damage)
++
+         if not self.isPlayer:
+             marker = getattr(self, 'marker', None)
+             if marker is not None:
+@@ -255,6 +303,252 @@
+         if self.health <= 0 and self.isCrewActive:
+             self.__onVehicleDeath()
+ 
++    def damage_announce(self, attackerID, damage):
++        try:
++            # Get Attacker
++            p = BigWorld.player()
++            current = p.arena.vehicles.get(self.__battleID)
++            attacker = p.arena.vehicles.get(attackerID)
++
++            # Update attackers health if they have not been seen
++            if attackerID not in self.__tankHealth:
++                self.__tankHealth[attackerID] = attacker["vehicleType"].maxHealth
++
++            def isOptionalEquipped(vehicle, optional_name):
++                for item in vehicle.optionalDevices:
++                    if item is not None and optional_name in item.name:
++                        return True
++                return False
++
++            def calculateReload(vehicle):
++                loader_skill = 126.5
++                if isOptionalEquipped(attacker["vehicleType"], "improvedVentilation"):
++                    loader_skill = 132.0
++
++                other_bonus = 1.0
++                # Take into account adrenaline skill
++                if self.__tankHealth[attackerID] < attacker["vehicleType"].maxHealth * 0.1:
++                    other_bonus *= 0.909
++
++                # Take into account rammer
++                if isOptionalEquipped(attacker["vehicleType"], "TankRammer"):
++                    other_bonus *= 0.9
++
++                return ((attacker["vehicleType"].gun["reloadTime"] * 0.875) / (0.00375 * loader_skill + 0.5)) * other_bonus
++
++            def getShellPrice(nationID, shellID):
++                import ResMgr, nations
++                from items import _xml, vehicles
++                from constants import ITEM_DEFS_PATH
++
++                price = {}
++                xmlPath = ITEM_DEFS_PATH + 'vehicles/' + nations.NAMES[nationID] + '/components/shells.xml'
++                for name, subsection in ResMgr.openSection(xmlPath).items():
++                    if name != 'icons':
++                        xmlCtx = (None, xmlPath + '/' + name)
++                        if _xml.readInt(xmlCtx, subsection, 'id', 0, 65535) == shellID:
++                            price = _xml.readPrice(xmlCtx, subsection, 'price')
++                            break
++                ResMgr.purge(xmlPath, True)
++
++                return price
++
++            def formatMessage(inMessage, defenderID, attackerID):
++                # Get Information
++                p = BigWorld.player()
++                current = p.arena.vehicles.get(defenderID)
++                attacker = p.arena.vehicles.get(attackerID)
++
++                # Do if statements
++                for shell in attacker["vehicleType"].gun["shots"]:
++                    if self.__hitType == shell["shell"]["effectsIndex"]:
++                        if inMessage.find("{{if_shell_gold}}") != -1:
++                            start = inMessage.find("{{if_shell_gold}}")
++                            end = inMessage.find("{{endif}}")
++                            if end != -1:
++                                price = getShellPrice(shell["shell"]["id"][0], shell["shell"]["id"][1])
++                                if price[1] == 0:
++                                    inMessage = inMessage[:start] + inMessage[end+9:]
++                                else:
++                                    inMessage = inMessage[:start] + inMessage[start+17:end] + inMessage[end+9:]
++                        break
++
++                # Create starting message
++                message = inMessage
++
++                # Parse Commands
++                position = 0
++                while position < len(inMessage):
++                    commandStart = inMessage[position:].find("{{")
++                    commandEnd = inMessage[position:].find("}}")
++
++                    if commandStart is -1:
++                        break
++
++                    width = -1
++                    command = inMessage[position+commandStart+2:position+commandEnd]
++
++                    if command.find("c:") is -1:
++                        seperator = command.find(":")
++                        if seperator is not -1:
++                            width = int(command[seperator+1:])
++                            command = command[:seperator]
++
++                    result = ""
++                    if command == "defender_user":
++                        result = current["name"]
++                    elif command == "defender_tier":
++                        result = str(current["vehicleType"].level)
++                    elif command == "defender_tank_long":
++                        result = unicode(current["vehicleType"].type.userString, 'utf-8')
++                    elif command == "defender_tank_short":
++                        result = unicode(current["vehicleType"].type.shortUserString, 'utf-8')
++                    elif command == "defender_cur_health":
++                        result = str(self.__tankHealth[defenderID])
++                    elif command == "defender_max_health":
++                        result = str(current["vehicleType"].maxHealth)
++                    elif command == "defender_tank_type_name":
++                        result = current["vehicleType"].name.replace(":", "-")
++                    elif command == "defender_tank_class":
++                        for tag in current["vehicleType"].type.tags:
++                            if tag == "heavyTank":
++                                pass
++                    elif command == "user":
++                        result = attacker["name"]
++                    elif command == "tier":
++                        result = str(attacker["vehicleType"].level)
++                    elif command == "tank_long":
++                        result = unicode(attacker["vehicleType"].type.userString, 'utf-8')
++                    elif command == "tank_short":
++                        result = unicode(attacker["vehicleType"].type.shortUserString, 'utf-8')
++                    elif command == "damage":
++                        result = str(damage)
++                    elif command == "cur_health":
++                        result = str(self.__tankHealth[attackerID])
++                    elif command == "max_health":
++                        result = str(attacker["vehicleType"].maxHealth)
++                    elif command == "tank_type_name":
++                        result = attacker["vehicleType"].name.replace(":", "-")
++                    elif command == "tank_class":
++                        for tag in attacker["vehicleType"].type.tags:
++                            if tag == "heavyTank":
++                                pass
++                    elif command == "reload":
++                        result = "{0:.2f}".format(calculateReload(attacker["vehicleType"])) + "s"
++                    elif command == "damage_roll":
++                        for shell in attacker["vehicleType"].gun["shots"]:
++                            if self.__hitType == shell["shell"]["effectsIndex"]:
++                                percent = ((damage - shell["shell"]["damage"][0]) / shell["shell"]["damage"][0]) * 100
++                                percent = min(25.0, max(percent, -25.0))
++                                result = "{0:+.2f}".format(percent) + "%"
++                                break
++                    elif command == "shell_penetration":
++                        for shell in attacker["vehicleType"].gun["shots"]:
++                            if self.__hitType == shell["shell"]["effectsIndex"]:
++                                result = str(int((shell["piercingPower"][0]+shell["piercingPower"][0])*0.5))
++                    elif command == "shell_cost":
++                        for shell in attacker["vehicleType"].gun["shots"]:
++                            if self.__hitType == shell["shell"]["effectsIndex"]:
++                                price = getShellPrice(shell["shell"]["id"][0], shell["shell"]["id"][1])
++                                if price[1] == 0:
++                                    result = str(price[0])
++                                else:
++                                    result = str(price[1] * 400)
++                    elif command == "shell_type":
++                        for shell in attacker["vehicleType"].gun["shots"]:
++                            if self.__hitType == shell["shell"]["effectsIndex"]:
++                                if shell["shell"]["kind"] == "ARMOR_PIERCING":
++                                    result = self.__damageCfg["name"]["shell"]["ap"]
++                                if shell["shell"]["kind"] == "ARMOR_PIERCING_CR":
++                                    result = self.__damageCfg["name"]["shell"]["apcr"]
++                                if shell["shell"]["kind"] == "HIGH_EXPLOSIVE":
++                                    result = self.__damageCfg["name"]["shell"]["he"]
++                                if shell["shell"]["kind"] == "HOLLOW_CHARGE":
++                                    result = self.__damageCfg["name"]["shell"]["heat"]
++                                break
++                    elif command == "c:shell":
++                        for shell in attacker["vehicleType"].gun["shots"]:
++                            if self.__hitType == shell["shell"]["effectsIndex"]:
++                                if shell["shell"]["kind"] == "ARMOR_PIERCING":
++                                    result = self.__damageCfg["color"]["shell"]["ap"]
++                                if shell["shell"]["kind"] == "ARMOR_PIERCING_CR":
++                                    result = self.__damageCfg["color"]["shell"]["apcr"]
++                                if shell["shell"]["kind"] == "HIGH_EXPLOSIVE":
++                                    result = self.__damageCfg["color"]["shell"]["he"]
++                                if shell["shell"]["kind"] == "HOLLOW_CHARGE":
++                                    result = self.__damageCfg["color"]["shell"]["heat"]
++                                break
++                    elif command == "shot_delay":
++                        if attacker["vehicleType"].gun["clip"][0] != 1:
++                            result = "{0:.2f}".format(attacker["vehicleType"].gun["clip"][1]) + "s"
++                        else:
++                            result = "{0:.2f}".format(calculateReload(attacker["vehicleType"])) + "s"
++                    elif command == "clip_size":
++                        result = str(attacker["vehicleType"].gun["clip"][0])
++                    elif command == "clip_delay":
++                        result = "{0:.2f}".format(attacker["vehicleType"].gun["clip"][1]) + "s"
++                    elif command == "burst_size":
++                        result = str(attacker["vehicleType"].gun["burst"][0])
++                    elif command == "burst_delay":
++                        result = "{0:.2f}".format(attacker["vehicleType"].gun["burst"][1]) + "s"
++                    else:
++                        raise Exception("Invalid Command: %s" % (command))
++
++                    # Replace Command
++                    if width is -1:
++                        message = message.replace("{{"+command+"}}", result)
++                    else:
++                        if len(result) < width:
++                            result = " " * (width - len(result)) + result
++                        message = message.replace("{{"+command+":"+str(width)+"}}", result[:width])
++
++                    position += commandEnd+2
++
++                return message
++
++            if self.__damageCfg is not None:
++                if self.__damageCfg["debug"]:
++                    LOG_NOTE("Hit:", attackerID, attacker, attacker["vehicleType"].__dict__, attacker["vehicleType"].type.__dict__)
++
++                currentVehicleID = p.playerVehicleID
++                if hasattr(BigWorld.player().inputHandler.ctrl, 'curVehicleID') and self.__damageCfg["hit_message"]["spectator"]:
++                    vehicleID = BigWorld.player().inputHandler.ctrl.curVehicleID
++                    if vehicleID is not None:
++                        currentVehicleID = vehicleID
++
++                # Test if we are the attacker
++                if currentVehicleID == attackerID:
++                    if self.__damageCfg["hit_message"]["given"]["enabled"]:
++                        if damage == 0:
++                            if self.__damageCfg["hit_message"]["given"]["bounce"]["enabled"]:
++                                MessengerEntry.g_instance.gui.addClientMessage(formatMessage(self.__damageCfg["hit_message"]["given"]["bounce"]["format"], self.__battleID, attackerID))
++                        else:
++                            MessengerEntry.g_instance.gui.addClientMessage(formatMessage(self.__damageCfg["hit_message"]["given"]["format"], self.__battleID, attackerID))
++                elif self.__battleID == currentVehicleID:
++                    if p.team != attacker["team"]:
++                        if self.__damageCfg["hit_message"]["received"]["enabled"]:
++                            if damage == 0:
++                                if self.__damageCfg["hit_message"]["received"]["bounce"]["enabled"]:
++                                    MessengerEntry.g_instance.gui.addClientMessage(formatMessage(self.__damageCfg["hit_message"]["received"]["bounce"]["format"], self.__battleID, attackerID))
++                            else:
++                                MessengerEntry.g_instance.gui.addClientMessage(formatMessage(self.__damageCfg["hit_message"]["received"]["format"], self.__battleID, attackerID))
++
++                if self.__battleID == p.playerVehicleID and attackerID != self.__battleID:
++                    if p.team == attacker["team"]:
++                        if self.__damageCfg["team_announce"]["enabled"]:
++                            if not BattleReplay.g_replayCtrl.isPlaying and damage > self.__damageCfg["team_announce"]["min_damage"]:
++                                from ChatManager import chatManager
++
++                                message = formatMessage(self.__damageCfg["team_announce"]["format"], self.__battleID, attackerID)
++                                BigWorld.player().broadcast(chatManager.battleTeamChannelID, message.encode('utf8', 'xmlcharrefreplace'))
++        except Exception, err:
++            self.printError(str(err))
++
++    def printError(self, message):
++        LOG_NOTE("Damage Announcer Error: ", message)
++        if self.__damageCfg["debug"]:
++            MessengerEntry.g_instance.gui.addClientMessage("<font color=\"#FF0000\">Damage Announcer Error: " + message + "</font>")
++
+     def showAmmoBayEffect(self, mode, fireballVolume, projectedTurretSpeed):
+         self.appearance.showAmmoBayEffect(mode, fireballVolume)
+ 
