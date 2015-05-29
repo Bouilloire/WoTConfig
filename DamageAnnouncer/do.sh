@@ -84,5 +84,12 @@ fi
 # Step 4 : Reinstall patched file
 cp $PATCHED_RECOMPILED_PATH $DEST_PATH
 
-# Step 5 : cleanup
+# Step 5 : Copy files
+if [ ! -d "$version" ]; then
+    mkdir $version
+fi
+cp $PATCHED_PATH $version/vehicle.py
+cp $PATCHED_RECOMPILED_PATH $version/vehicle.pyc
+
+# Step 6 : cleanup
 rm -f $PATCHED_PATH $UNC_PATH $PATCHED_RECOMPILED_PATH
