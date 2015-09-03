@@ -15,7 +15,7 @@
     "autologin": true,
     // Auto confirm old replays playing
     // Автоматически подтверждать проигрывание старых реплеев
-    "confirmOldReplays": false,
+    "confirmOldReplays": true,
     // Ping servers
     // Пинг серверов
     "pingServers": {

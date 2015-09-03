@@ -16,21 +16,24 @@
     // true - Use credits instead of gold as default currency for ammo and equipment
     // true - Использовать кредиты, а не золото как валюту по умолчанию для снарядов и снаряжения
     "defaultBoughtForCredits": true,
-    // true - Show mastery mark in tech tree
-    // true - Показывать знак мастерства в дереве исследований
-    "masteryMarkInTechTree": true,
     // true - Hide price button in tech tree
     // true - Прятать кнопку с ценой в дереве исследований
     "hidePricesInTechTree": false,
+    // true - Show mastery mark in tech tree
+    // true - Показывать знак мастерства в дереве исследований
+    "masteryMarkInTechTree": true,
     // true - Allow to consider the exchange of experience with gold in tech tree
-    // true - Разрешить учитывать обмен опыта за голду в дереве исследований
+    // true - Разрешить учитывать обмен опыта за золото в дереве исследований
     "allowExchangeXPInTechTree": false,
-    // true - Automatically return previous crew upon vehicle change
-    // true - Автоматически возвращать предыдущий экипаж при смене танка
-    "autoPutPreviousCrewInTanks": false,
-    // true - Show shooting range of artillery and machine guns in carousel and techtree tooltips
-    // true - Показывать дальность стрельбы артиллерии и пулеметов в всплывающих подсказках карусели и дерева исследований
-    "showShootRangeTooltip": true,
+    // true - Enable crew auto return function
+    // true - Включить функцию автовозврата экипажа
+    "enableCrewAutoReturn": true,
+    // true - Return crew check box is selected by default
+    // true - Включить галочку возврата экипажа по умолчанию
+    "crewReturnByDefault": false,
+    // true - Enable removable equipment auto return (Camouflage net, Stereoscope, Toolbox)
+    // true - Включить автовозврат съемного оборудования (Маскировочная сеть, Стереотруба, Ящик с инструментами)
+    "enableEquipAutoReturn": false,
     // true - Enable widgets
     // true - включить виджеты
     "widgetsEnabled": false,

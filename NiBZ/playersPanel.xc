@@ -64,7 +64,7 @@
     "removeSquadIcon": false,
     // true - Remove the Players Panel mode switcher (buttons for changing size).
     // true - убрать переключатель режимов ушей мышкой.
-    "removePanelsModeSwitcher": true,
+    "removePanelsModeSwitcher": false,
     // Start panels mode. Possible values: "none", "short", "medium", "medium2", "large".
     // Начальный режим ушей. Возможные значения: "none", "short", "medium", "medium2", "large".
     "startMode": "large",
